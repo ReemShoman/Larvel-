@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,16 +16,20 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//theme route
 Route::controller(ThemeController::class)->name('theme.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/category','category')->name('category');
     Route::get('/contact','contact')->name('contact');
     Route::get('/single-blog','singleBlog')->name('singleBlog');
-    Route::get('/login','login')->name('login');
-        Route::get('/register','register')->name('register');
-
-
+   
     });
+
+    //route for subscriber
+    Route::post('/subscriber/store',[SubscriberController::class,'store'])->name('subscriber.store');
+  //route for contact
+    Route::post('/contact/store',[ContactController::class,'store'])->name('contact.store');
+
 
 
 

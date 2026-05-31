@@ -6,22 +6,38 @@
                   <h4 class="single-sidebar-widget__title">Newsletter</h4>
                   <div class="form-group mt-30">
                     <div class="col-autos">
-                      <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email" onfocus="this.placeholder = ''"
-                        onblur="this.placeholder = 'Enter email'">
+                      @if (session('status'))
+                          <div class="alert alert-success">
+                             {{ session('status') }}
+                             </div>
+                      @endif
+                      <form action="{{ route('subscriber.store') }}" method="post">
+                        @csrf
+              <input type="text" name="email" class="form-control" id="inlineFormInputGroup" placeholder="Enter email" value="{{ old('email') }}" onfocus="this.placeholder = ''"onblur="this.placeholder = 'Enter email'">
+                  <button  type="submit" class="bbtns d-block mt-2 w-100">Subcribe</button>
+                   @error('email')
+                   <span class="text-danger">{{ $message }}</span>
+                   @enderror
+            </form>
+
+
                     </div>
                   </div>
-                  <button class="bbtns d-block mt-20 w-100">Subcribe</button>
                 </div>
-
+               @if(count($categories) > 0)
                 <div class="single-sidebar-widget post-category-widget">
                   <h4 class="single-sidebar-widget__title">Catgory</h4>
                   <ul class="cat-list mt-20">
+                    @foreach ( $categories as $category )
+                    
                     <li>
                       <a href="#" class="d-flex justify-content-between">
-                        <p>Technology</p>
+                        <p>{{ $category->name }}</p>
                         <p>(03)</p>
                       </a>
                     </li>
+                    @endforeach
+
                     <li>
                       <a href="#" class="d-flex justify-content-between">
                         <p>Software</p>
@@ -48,7 +64,7 @@
                     </li>
                   </ul>
                 </div>
-
+               @endif
                 <div class="single-sidebar-widget popular-post-widget">
                   <h4 class="single-sidebar-widget__title">Recent Post</h4>
                   <div class="popular-post-list">
